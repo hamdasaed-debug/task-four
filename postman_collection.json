@@ -1,0 +1,92 @@
+{
+  "info": {
+    "name": "Task Manager API",
+    "description": "CRUD endpoints for the Task Manager API assignment.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "taskId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": { "method": "GET", "url": "{{baseUrl}}/" }
+    },
+    {
+      "name": "Create Task",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Buy groceries\",\n  \"description\": \"Milk, eggs, bread\",\n  \"status\": \"pending\"\n}"
+        },
+        "url": "{{baseUrl}}/tasks"
+      }
+    },
+    {
+      "name": "Create Task - Invalid (missing title)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"description\": \"no title here\"\n}" },
+        "url": "{{baseUrl}}/tasks"
+      }
+    },
+    {
+      "name": "Get All Tasks",
+      "request": { "method": "GET", "url": "{{baseUrl}}/tasks" }
+    },
+    {
+      "name": "Get Tasks Filtered by Status",
+      "request": { "method": "GET", "url": "{{baseUrl}}/tasks?status=pending" }
+    },
+    {
+      "name": "Get Task By Id",
+      "request": { "method": "GET", "url": "{{baseUrl}}/tasks/{{taskId}}" }
+    },
+    {
+      "name": "Get Task By Id - Not Found",
+      "request": { "method": "GET", "url": "{{baseUrl}}/tasks/999999" }
+    },
+    {
+      "name": "Update Task (PUT - full replace)",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Buy groceries and cook dinner\",\n  \"description\": \"Milk, eggs, bread, chicken\",\n  \"status\": \"completed\"\n}"
+        },
+        "url": "{{baseUrl}}/tasks/{{taskId}}"
+      }
+    },
+    {
+      "name": "Update Task (PATCH - partial)",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"status\": \"completed\"\n}" },
+        "url": "{{baseUrl}}/tasks/{{taskId}}"
+      }
+    },
+    {
+      "name": "Update Task - Invalid (empty title)",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"title\": \"\"\n}" },
+        "url": "{{baseUrl}}/tasks/{{taskId}}"
+      }
+    },
+    {
+      "name": "Delete Task",
+      "request": { "method": "DELETE", "url": "{{baseUrl}}/tasks/{{taskId}}" }
+    },
+    {
+      "name": "Delete Task - Not Found",
+      "request": { "method": "DELETE", "url": "{{baseUrl}}/tasks/999999" }
+    }
+  ]
+}
